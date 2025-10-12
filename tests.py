@@ -3,74 +3,29 @@
 import unittest
 from textwrap import dedent
 from functions.get_files_info import get_files_info
+from functions.get_file_content import get_file_content
 
 class TestGetFilesInfo(unittest.TestCase):
-    def test_current_directory(self):
-        result = get_files_info("calculator", ".")
-        print(dedent(
-            f"""
-            Expected result for current directory:
-            - main.py: file_size=719 bytes, is_dir=False
-            - tests.py: file_size=1331 bytes, is_dir=False
-            - pkg: file_size=44 bytes, is_dir=True
-            """
-        ))
+    def test_1(self):
+        result = get_file_content("calculator", "main.py")
 
-        print(dedent(
-            f"""
-            Actual result for current directory:
-            {result}
-            """
-        ))
+        print(result)
 
-    def test_pkg_directory(self):
-        result = get_files_info("calculator", "pkg")
-        print(dedent(
-            f"""
-            Expected result for 'pkg' directory:
-            - calculator.py: file_size=1721 bytes, is_dir=False
-            - render.py: file_size=376 bytes, is_dir=False
-            """
-        ))
+    def test_2(self):
+        result = get_file_content("calculator", "pkg/calculator.py")
 
-        print(dedent(
-            f"""
-            Actual result for 'pkg' directory:
-            {result}
-            """
-        ))
+        print(result)
 
-    def test_outside_directory(self):
-        result = get_files_info("calculator", "/bin")
-        print(dedent(
-            f"""
-            Expected result for /bin directory:
-            Error: Cannot list "/bin" as it is outside the permitted working directory
-            """
-        ))
+    def test_3(self):
+        result = get_file_content("calculator", "/bin/cat")
 
-        print(dedent(
-            f"""
-            Actual result for /bin directory:
-            {result}
-            """
-        ))
+        print(result)
 
-    def test_outside_directory_2(self):
-        result = get_files_info("calculator", "../")
-        print(dedent(
-            f"""
-            Expected result for ../ directory:
-            Error: Cannot list "../" as it is outside the permitted working directory
-            """
-        ))
+    def test_4(self):
+        result = get_file_content("calculator", "pkg/does_not_exist.py")
 
-        print(dedent(
-            f"""
-            Actual result for ../ directory:
-            {result}
-            """
-        ))
+        print(result)
+
 
 
 if __name__ == "__main__":

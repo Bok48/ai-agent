@@ -1,3 +1,5 @@
+# get_files_info.py
+
 import os
 
 def get_files_info(working_directory, directory="."):
@@ -28,5 +30,5 @@ def get_files_info(working_directory, directory="."):
             contents_str += f"- {target}: file_size={file_size} bytes, is_dir={is_dir}\n"
         
         return contents_str
-    except Error as e:
-        return f"Error: {e}"
+    except Exception as e:
+        return f"Error reading directory: {e}"

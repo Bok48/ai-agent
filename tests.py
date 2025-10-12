@@ -4,27 +4,15 @@ import unittest
 from textwrap import dedent
 from functions.get_files_info import get_files_info
 from functions.get_file_content import get_file_content
+from functions.write_file import write_file
 
 class TestGetFilesInfo(unittest.TestCase):
+    
+    
     def test_1(self):
-        result = get_file_content("calculator", "main.py")
-
-        print(result)
-
-    def test_2(self):
-        result = get_file_content("calculator", "pkg/calculator.py")
-
-        print(result)
-
-    def test_3(self):
-        result = get_file_content("calculator", "/bin/cat")
-
-        print(result)
-
-    def test_4(self):
-        result = get_file_content("calculator", "pkg/does_not_exist.py")
-
-        print(result)
+        print(write_file("calculator", "lorem.txt", "wait, this isn't lorem ipsum"))
+        print(write_file("calculator", "pkg/morelorem.txt", "lorem ipsum dolor sit amet"))
+        print(write_file("calculator", "/tmp/temp.txt", "this should not be allowed"))
 
 
 

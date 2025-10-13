@@ -9,8 +9,11 @@ from functions.run_python_file import run_python_file
 
 class TestGetFilesInfo(unittest.TestCase):
     
+    def test_get_files_info(self):
+        print(get_files_info(directory="."))
+        print(get_files_info(directory="pkg"))
     
-    def test_1(self):
+    def test_run_python_file(self):
         print(run_python_file("calculator", "main.py"))
         print(run_python_file("calculator", "main.py", ["3 + 5"]))
         print(run_python_file("calculator", "tests.py"))

@@ -27,6 +27,7 @@ schema_get_file_content = types.FunctionDeclaration(
                 description="The file path to the file the caller wants to read, relative to the working directory.",
             ),
         },
+        required=["file_path"],
     ),
 )
 
@@ -35,7 +36,7 @@ schema_write_file = types.FunctionDeclaration(
     description="Will write the specified contents into the specified file. If the file does not exist, a new file will be created.",
     parameters=types.Schema(
         type=types.Type.OBJECT,
-        properties=(
+        properties={
             "file_path": types.Schema(
                 type=types.Type.STRING,
                 description="The file path to the file the caller wants to write in.",
@@ -44,7 +45,29 @@ schema_write_file = types.FunctionDeclaration(
                 type=types.Type.STRING,
                 description="The string of content the calles wants written into the file.",
             ),
-        ),
+        },
+        required=["file_path"],
+    ),
+)
+
+schema_run_python_file = types.FunctionDeclaration(
+    name="run_python_file",
+    description="Will run the specified file with the given list of arguments. File needs to be specified with a path relative to root.",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "file_path": types.Schema(
+                type=types.Type.STRING,
+                description="The file path to the python file the caller wants to run.",
+            ),
+            "args": types.Schema(
+                type=types.Type.ARRAY,
+                items=types.Schema(type=types.Type.STRING),
+                description="Optional arguments to pass with the python file.",
+                nullable=True,
+            ),
+        },
+        required=["file_path"],
     ),
 )
 

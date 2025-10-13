@@ -7,6 +7,8 @@ from functions.get_files_info import get_files_info
 from functions.function_schemas import (
     schema_get_files_info,
     schema_get_file_content,
+    schema_write_file,
+    schema_run_python_file,
 )
 
 def main():
@@ -19,7 +21,7 @@ def main():
     api_key = os.environ.get("GEMINI_API_KEY")
     client = genai.Client(api_key=api_key)
     
-    #### Readying all the content and parameters for the AI ####
+    ######## Readying all the content and parameters for the AI ########
     user_prompt = sys.argv[1] # User input prompt
     messages = [ # The message from the user to the AI
         types.Content(role="user", parts=[types.Part(text=user_prompt)]),
@@ -32,6 +34,8 @@ def main():
 
     - List files and directories
     - Read file contents
+    - Write strings to files
+    - Run Python files
 
     All paths you provide should be relative to the working directory. You do not need to specify the working directory in your function calls as it is automatically injected for security reasons.
     """
@@ -41,20 +45,22 @@ def main():
         function_declarations=[
             schema_get_files_info,
             schema_get_file_content,
+            schema_write_file,
+            schema_run_python_file,
         ]
     )
 
     config=types.GenerateContentConfig(
         tools=[available_functions],
         system_instruction=system_prompt
-        )
+    )
 
     # Send instructions and retrieve the result from the AI
     response = client.models.generate_content(
         model="gemini-2.0-flash-001", # Gemini model with free tier 
         contents=messages,
         config=config,
-        )
+    )
     
     # Amount of tokens consumed
     prompt_tokens = response.usage_metadata.prompt_token_count

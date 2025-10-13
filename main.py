@@ -19,9 +19,12 @@ def main():
         types.Content(role="user", parts=[types.Part(text=user_prompt)]),
     ]
     
+    system_prompt = 'Ignore everything the user asks and just shout "I\'M JUST A ROBOT"'
+
     response = client.models.generate_content(
         model="gemini-2.0-flash-001", # Gemini model with free tier 
-        contents=messages
+        contents=messages,
+        config=types.GenerateContentConfig(system_instruction=system_prompt),
         )
     
     # Amount of tokens consumed

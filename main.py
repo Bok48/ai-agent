@@ -3,7 +3,7 @@ import sys
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
-from functions.get_files_info import get_files_info
+from functions.call_function import call_function
 from functions.function_schemas import (
     schema_get_files_info,
     schema_get_file_content,
@@ -16,6 +16,10 @@ def main():
     if len(sys.argv) <= 1:
         print("error: prompt not given")
         exit(1)
+
+    arg_verbose = False
+    if "--verbose" in sys.argv[2:]:
+        arg_verbose = True
 
     load_dotenv()
     api_key = os.environ.get("GEMINI_API_KEY")
@@ -71,11 +75,15 @@ def main():
     function_calls = response.function_calls
     if function_calls is not None and len(function_calls) > 0:
         for function_call in function_calls:
-            print(f"Calling function: {function_call.name}({function_call.args})")
+            call_response = call_function(function_call)
+            if call_response.parts[0].function_response.response == None:
+                raise Exception("Fatal error: could not get response from the function call.")
+            if arg_verbose:
+                print(f"-> {call_response.parts[0].function_response.response}")
 
     if len(sys.argv) > 2:
 
-        if "--verbose" in sys.argv[2:]:
+        if arg_verbose:
             print(f"User prompt: {user_prompt}")
             print(f"Prompt tokens: {prompt_tokens}")
             print(f"Response tokens: {response_tokens}")

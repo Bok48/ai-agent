@@ -71,13 +71,12 @@ def main():
         try:
             # Send instructions and retrieve the result from the AI
             response = client.models.generate_content(
-                model="gemini-2.0-flash-001", # Gemini model with free tier 
+                model="gemini-2.5-flash", # Gemini model with free tier 
                 contents=messages,
                 config=config,
             )
 
             for candidate in response.candidates:
-                #print(f"Candidate: {candidate.content}")
                 messages.append(candidate.content)
             
             # Amount of tokens consumed

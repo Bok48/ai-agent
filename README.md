@@ -11,9 +11,9 @@ If you want to change this, the working directory for the AI is currently hardco
 
 ## Setup
 
-Before using this AI agent, access to an AI has to be provided. To do this, a `.env` file with a Gemini API key has to be created. The key can be 
-The contents should look like this:
+Before using this AI agent, access to an AI has to be provided. To do this, create a `.env` file with a Gemini API key in the root folder of the project. Create a key at `https://aistudio.google.com/api-keys`, and make sure it's set to use the free tier (should be by default) unless you want to use the software for more than just testing it.
 
+The contents should look like this:
 ```
 # API key for Gemini access
 GEMINI_API_KEY="yourverylongkeyhere"

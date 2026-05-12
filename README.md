@@ -30,8 +30,8 @@ The Ai agent can only do 4 different actions:
 * Create and write files
 * Run Python files
 
-To make the AI agent do anything, you need to write `uv run main.py <command>`.
-Here is an example:
+To make the AI agent do anything, you need to write `uv run main.py <command>` (make sure the virtual environment is activated for best chance of success).
+Here are some examples:
 
 ```
 uv run main.py "List the files in the working directory"
